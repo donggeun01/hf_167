@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminStoreDAO">
+	
+	<resultMap id="adminStoreMenuResult" type="adminStroeMenu" >
+		<id property="store_name" column="STORE_NAME"/>
+		<result property="seq" column="SEQ"/>
+		<result property="store_name" column="STORE_NAME"/>
+		<result property="type" column="TYPE"/>
+		<result property="menubar" column="MENUBAR"/>
+		<result property="food" column="FOOD"/>
+		<result property="food_price" column="FOOD_PRICE"/>
+		<result property="food_img" column="FOOD_IMG"/>
+		<result property="food_opt" column="FOOD_OPT"/>
+	</resultMap>
+
+	<select id="getAdminStore" resultType="adminStore">
+		SELECT * FROM STORE WHERE NAME =#{name}
+	</select>
+	
+	<update id="updateStore">
+		UPDATE STORE SET TEL=#{tel}, LOCATION=#{location}, DELIVERY_PRICE = #{delivery_price}, LEAST_PRICE = #{least_price}, STORE_IMG = #{store_img}, INFO = #{info} WHERE NAME = #{name}
+	</update>
+	
+	<select id="getMenuList" resultType="adminStroeMenu">
+		SELECT * FROM MENU WHERE STORE_NAME = #{store_name}
+	</select>
+	
+	<insert id="insertMenu_BAR" parameterType="adminStroeMenu">
+		INSERT INTO MENU(store_name, type, menubar) VALUES (#{store_name},#{type},#{menubar})
+	</insert>
+	
+	<insert id="insertMenu" parameterType="adminStroeMenu">
+		INSERT INTO MENU(STORE_NAME, TYPE, MENUBAR, FOOD, FOOD_PRICE, FOOD_IMG, FOOD_OPT) VALUES
+		 (#{store_name},#{type},#{menubar},#{food},#{food_price},#{food_img},#{food_opt})
+	</insert>
+	
+	<delete id="deleteMenu">
+		DELETE FROM MENU WHERE SEQ = #{seq}
+	</delete>
+	
+	<update id="updateCondition">
+		UPDATE STORE SET STORE.CONDITION=#{condition}, CONDITION_VALUE=#{condition_value}, CONDITION_DAY=#{condition_day} WHERE NAME=#{name}
+	</update>
+	
+</mapper>

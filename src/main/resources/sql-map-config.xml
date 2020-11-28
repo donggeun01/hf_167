@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<!-- Alias 설정 -->
+	<typeAliases>
+		<typeAlias type="com.spring.biz.admin.store.AdminStoreDTO" alias="adminStore"/>
+		<typeAlias type="com.spring.biz.admin.store.AdminStoreMenuDTO" alias="adminStroeMenu"/>
+		<typeAlias type="com.spring.biz.admin.user.AdminUserDTO" alias="adminUser"/>
+		<typeAlias type="com.spring.biz.admin.order.AdminOrderDTO" alias="adminOrder"/>
+		<typeAlias type="com.spring.biz.admin.order.AdminOrderCntDTO" alias="adminOrderCnt"/>
+	</typeAliases>
+	
+	<!-- DataSource 설정 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+				<dataSource type="POOLED">
+					<property name="driver" value = "com.mysql.cj.jdbc.Driver"/>
+					<property name="url" value = "jdbc:mysql://localhost:3306/hf_167_2차수정?serverTimezone=Asia/Seoul"/>
+					<property name="username" value = "root"/>
+					<property name="password" value = "1234"/>
+				</dataSource>
+		</environment>
+	</environments>
+	
+	
+	<!-- Sql mapper 설정 -->
+	<mappers>
+		<mapper resource="mappings/AdminStore-mapping.xml"/>
+		<mapper resource="mappings/AdminUser-mapping.xml"/>
+		<mapper resource="mappings/AdminOrder-mapping.xml"/>
+	</mappers>
+	
+</configuration>

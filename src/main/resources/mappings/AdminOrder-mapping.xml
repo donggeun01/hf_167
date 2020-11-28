@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminOrderDAO">
+
+
+	
+	<select id="getPhone" resultType="string">
+		<![CDATA[
+		SELECT phone FROM user WHERE e_mail = #{e_mail}
+		]]>
+	</select>
+	
+	<select id="getOrder_List" resultType="adminOrder">
+		<![CDATA[
+		SELECT o.seq, o.date_order ,o.user_e_mail, o.address, o.address_detail, d.food1, d.food2, d.food3, d.food4, d.food5, hf_167_2차수정.o.type FROM hf_167_2차수정.order as o 
+		JOIN order_detail as d 
+		ON o.seq = d.order_seq 
+		WHERE hf_167_2차수정.o.type < 2 AND o.store_name=#{store_name} ORDER BY o.seq
+		]]>
+	</select>
+	
+	<update id="typeUpdate">
+		UPDATE hf_167_2차수정.order SET type =#{type} WHERE SEQ =#{seq}
+	</update>
+	
+	<select id="getOrderLog_List" resultType="adminOrder">
+		<![CDATA[
+		SELECT o.seq, o.date_order, o.user_e_mail, o.address, o.address_detail, d.food1, d.food2, d.food3, d.food4, d.food5, hf_167_2차수정.o.type FROM hf_167_2차수정.order as o 
+		JOIN order_detail as d ON o.seq = d.order_seq 
+		WHERE o.store_name=#{store_name} ORDER BY o.seq
+		]]>
+	</select>
+	
+	<select id="sumRegular_List" resultType="adminOrder">
+		<![CDATA[
+		SELECT o.user_e_mail, d.* FROM hf_167_2차수정.order as o JOIN order_detail as d 
+		ON o.seq = d.order_seq 
+		WHERE o.date_order > date(subdate(curdate(), interval #{condition_day} day)) and store_name=#{name}
+		]]>
+	</select>
+	
+	<select id="countRegular_List" resultType="adminOrderCnt">
+		<![CDATA[
+		SELECT user_e_mail, COUNT(*) AS cnt FROM hf_167_2차수정.order 
+		WHERE date_order > date(subdate(curdate(), interval #{condition_day} day))AND store_name=#{name} GROUP BY user_e_mail
+		]]>
+	</select>
+	
+</mapper>
